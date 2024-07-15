@@ -1,10 +1,10 @@
 from typing import Generic, TypeVar
 
-from pydantic.generics import GenericModel
+from pydantic import BaseModel
 
 DataType = TypeVar("DataType")
 
 
-class ApiResponse(GenericModel, Generic[DataType]):
+class ApiResponse(BaseModel, Generic[DataType]):
     data: DataType | None
 

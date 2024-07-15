@@ -17,9 +17,6 @@ if __name__ == "__main__":
 
     )
 
-    # config = uvicorn.Config(app, port=9000, log_level="info")
-
-    # Setup logging
     # setup_logging(
     #     logging_level=settings.logging_level,
     #     logging_json_format=settings.logging_json_format,

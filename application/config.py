@@ -1,8 +1,7 @@
 from os.path import dirname, realpath
 from typing import Literal
 
-from pydantic import PostgresDsn, field_validator, validator
-from pydantic_settings import BaseSettings
+from pydantic import BaseSettings, PostgresDsn, validator
 
 
 class Settings(BaseSettings):
@@ -33,7 +32,7 @@ class Settings(BaseSettings):
 
     app_name: str = "chat-backend"
 
-    @field_validator("backend_cors_origins", mode="before")
+    @validator("backend_cors_origins", pre="before")
     def assemble_cors_origins(cls, v: str | list[str]) -> list[str] | str:
         if isinstance(v, str) and not v.startswith("["):
             return [i.strip() for i in v.split(",")]

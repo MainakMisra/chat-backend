@@ -1,1 +1,9 @@
+# IntelliJ, Pycharm...
 .idea
+.DS
+.vscode
+.venv
+
+**/__pycache__/
+*.py[cod]
+*$py.class
