@@ -17,3 +17,26 @@ class UserCreate(BaseModel):
     #     if not password_regex.fullmatch(v):
     #         raise ValueError("password doesn't respect regex")
     #     return v
+
+
+class UserPasswordUpdate(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class User(BaseModel):
+    id: int
+    email: str
+    first_name: str
+    last_name: str
+
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class UserLoginResponse(BaseModel):
+    confirmation: str
+    user_id: str
+    email: str

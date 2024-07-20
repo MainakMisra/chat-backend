@@ -28,11 +28,7 @@ def get_db(request: Request) -> Database:
 
 
 def get_db_session(database: Database = Depends(get_db), ) -> Generator[Session, None, None]:
-    """Dependency used to create new database session for each request.
-
-    Note: db object is passed as dependency injection to allow mocking it on
-    tests.
-    """
+    """Dependency used to create new database session for each request."""
     session = database.Session()
     try:
         yield session

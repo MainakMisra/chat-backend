@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, UniqueConstraint
 
-from application.core.serializers.user import User
+from application.core.users.serializers import User
 from application.database.bases import Base
 
 
