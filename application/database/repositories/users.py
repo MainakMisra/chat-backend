@@ -3,7 +3,7 @@ import logging
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import Session
 
-from application.core.users.exceptions import UserEmailNotFound
+from application.core.users.exceptions import UserEmailNotFound, UserIdNotFound
 from application.core.users.serializers import User, UserCreate
 from application.database.models.users import UserOrm
 
@@ -36,6 +36,18 @@ class UserRepository:
         except NoResultFound:
             self.logger.exception(f"Didn't find user with email '{user_email}'")
             raise UserEmailNotFound(user_email=user_email)
+
+        return user
+
+    def get_user_by_id(self, user_id: int) -> User:
+        self.logger.info(f"Checking that a user with id='{user_id}' exists")
+        try:
+            user: User = (
+                self.session.query(UserOrm).filter_by(id=user_id).one().to_pydantic()
+            )
+        except NoResultFound:
+            self.logger.exception(f"Didn't find user with id '{user_id}'")
+            raise UserIdNotFound(user_id=user_id)
 
         return user
 

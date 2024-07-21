@@ -39,8 +39,13 @@ class UserService(CallableInstance):
     ) -> User:
         return self.user_repository.get_user_by_email(user_email=user_email)
 
-    def update_user_password(self, user_id: int, new_password: str) -> None:
+    def get_user_by_id(
+            self,
+            user_id: int,
+    ) -> User:
+        return self.user_repository.get_user_by_id(user_id=user_id)
 
+    def update_user_password(self, user_id: int, new_password: str) -> None:
         self.logger.info(f"Updating user password for user with id {user_id}")
         hashed_password = generate_password_hash(new_password, method="sha256")
 

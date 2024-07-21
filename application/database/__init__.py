@@ -31,7 +31,6 @@ class Database(CallableInstance):
     def truncate_db(self) -> None:
         self.logger.info("Cleaning database data")
         with self.Session() as session:
-            # Allows truncating all schemas tables or just public schema
             table_names = ",".join([table.name for table in self.Base.metadata.sorted_tables])
             query = text(f"TRUNCATE {table_names} RESTART IDENTITY;")
             session.execute(query)

@@ -13,6 +13,11 @@ class UserEmailNotFound(CoreBaseException):
         self.details = f"No user with email='{user_email}' exists."
 
 
+class UserIdNotFound(CoreBaseException):
+    def __init__(self, user_id: int) -> None:
+        self.details = f"No user with id='{user_id}' exists."
+
+
 class HTTPUserAlreadyExists(HTTPException):
     status_code = 409
 
@@ -25,5 +30,3 @@ class HTTPUserNotFound(HTTPException):
 
     def __init__(self, user_email: str | None = None) -> None:
         self.detail = f"User with email '{user_email}' does not exists."
-
-

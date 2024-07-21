@@ -1,7 +1,7 @@
 import logging
 from collections.abc import Generator
 
-from fastapi import Depends, HTTPException, Request
+from fastapi import Depends, HTTPException, Request, WebSocket
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
@@ -18,12 +18,15 @@ class UnexpectedInternalError(HTTPException):
         self.detail = "Unexpected error on internal operation"
 
 
-def get_db(request: Request) -> Database:
+def get_db(request: Request = None, websocket: WebSocket = None) -> Database:
     try:
-        db: Database = request.app.state.db
+        if request:
+            db: Database = request.app.state.db
+        else:
+            db: Database = websocket.app.state.db
         return db
     except AttributeError:
-        logger.exception("Internal error: 'request.app.state.db' unset for unknown reasons")
+        logger.exception("Internal error: db unset for unknown reasons")
         raise UnexpectedInternalError
 
 

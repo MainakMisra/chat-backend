@@ -50,7 +50,9 @@ def init_app() -> FastAPI:
         )
 
     from application.routes.router import main_router
+    from application.routes.websocket.chat import router as chat_router
 
     app.include_router(main_router)
+    app.include_router(chat_router)
 
     return app
