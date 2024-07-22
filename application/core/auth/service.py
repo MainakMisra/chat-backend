@@ -12,7 +12,6 @@ from application.routes.api.exceptions import UserPasswordMisMatch
 
 
 class AuthService(CallableInstance):
-
     def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.logger.info("Authentication service initialized")
@@ -20,8 +19,9 @@ class AuthService(CallableInstance):
     def login(self, login_details: UserLogin, session: Session) -> UserLoginResponse:
         self.logger.info(f"Logging in user {login_details.email}")
         try:
-            # todo: use user repository for this
-            user_data = (session.query(UserOrm).filter_by(email=login_details.email).one())
+            user_data = (
+                session.query(UserOrm).filter_by(email=login_details.email).one()
+            )
 
         except NoResultFound:
             raise HTTPUserNotFound(user_email=login_details.email)

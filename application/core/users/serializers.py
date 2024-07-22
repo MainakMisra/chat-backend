@@ -1,6 +1,6 @@
 import re
 
-from pydantic import BaseModel, EmailStr, Field, validator
+from pydantic import BaseModel, EmailStr
 
 # Regular expression for password
 password_regex = re.compile("""[A-Za-z0-9.,?{}()-_+=!`~@#$%^&*|;'" ]{8,}$""")  # noqa: W605

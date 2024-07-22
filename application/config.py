@@ -6,7 +6,6 @@ from pydantic import BaseSettings, PostgresDsn, validator
 
 class Settings(BaseSettings):
     # Server's internal behavior
-    # server_host: str = "0.0.0.0"
     api_prefix: str = "/api"
     server_port: int = 9000
     uvicorn_auto_reload: bool = True
@@ -14,7 +13,9 @@ class Settings(BaseSettings):
     # Logging
     logging_json_format: bool = False
     logging_level: Literal["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"] = "INFO"
-    sqlalchemy_log_level: Literal["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"] = "WARNING"
+    sqlalchemy_log_level: Literal[
+        "CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"
+    ] = "WARNING"
 
     # Postgres' configuration for db used by the server and by pytest
     db_uri: PostgresDsn
