@@ -24,11 +24,7 @@ services:
   fastapi:
     env_file:
       - ./config/server.env
-    image: "${FASTAPI_SERVICE_IMAGE:-chat-room}"
-    build:
-      context: .
-      dockerfile: "${FASTAPI_SERVICE_DOCKERFILE:-Dockerfile.release}"
-    container_name: fastapi
+    build: .
     restart: always
     environment:
       DB_URI: "postgresql://postgres:postgres@postgres/chat_room"
@@ -38,8 +34,6 @@ services:
     volumes:
       - ./application:/app/application
       - ./alembic:/app/alembic
-      - ./tests:/app/tests
-    # Will only start service when postgres send a 'service_healthy' signal
     depends_on:
       postgres:
         condition: service_healthy

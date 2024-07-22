@@ -10,10 +10,8 @@ docker-compose := $(docker) compose
 
 # Python tools
 pip := $(shell which pip3)
-python := $(poetry) run python
-pytest := $(poetry) run pytest
-alembic := $(poetry) run alembic
-pre-commit := $(poetry) run pre-commit
+python := python
+pre-commit := python run pre-commit
 
 MAKEFILE_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
@@ -23,6 +21,8 @@ DOCKER_DB_URI := "postgresql://$${POSTGRES_PASSWORD}:$${POSTGRES_PASSWORD}@0.0.0
 # Name of the services on compose
 MAIN_SERVICE_NAME := "fastapi"
 POSTGRES_SERVICE_NAME := "postgres"
+
+PYTEST_ARGS := -vv --ff --durations=10 --durations-min=2.0
 
 db:
 	$(docker-compose) up -d $(POSTGRES_SERVICE_NAME)
@@ -35,3 +35,10 @@ erase-db:
 
 # Recreate database with an empty volume
 clean-db: erase-db db
+
+
+run-compose:
+	@echo "\n* Assuring backend is not already running...\n"
+	$(docker-compose) down > /dev/null 2>&1 | true
+	@echo "\n* Starting backend...\n"
+	$(docker-compose) up --build
