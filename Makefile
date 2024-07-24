@@ -14,6 +14,7 @@ python := python
 pre-commit := python run pre-commit
 
 MAKEFILE_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+TESTS_DIR := $(MAKEFILE_DIR)/tests
 
 # Variable used to connect to postgres inside docker container using psql and docker compose exec
 DOCKER_DB_URI := "postgresql://$${POSTGRES_PASSWORD}:$${POSTGRES_PASSWORD}@0.0.0.0:5432/$${POSTGRES_DB}"
@@ -42,3 +43,13 @@ run-compose:
 	$(docker-compose) down > /dev/null 2>&1 | true
 	@echo "\n* Starting backend...\n"
 	$(docker-compose) up --build
+
+
+test-service:
+	PYTHONPATH=$(MAKEFILE_DIR) pytest $(TESTS_DIR)/services/
+
+test-repositories:
+	PYTHONPATH=$(MAKEFILE_DIR) pytest $(TESTS_DIR)/repositories/
+
+test-routes:
+	PYTHONPATH=$(MAKEFILE_DIR) pytest $(TESTS_DIR)/routes/
